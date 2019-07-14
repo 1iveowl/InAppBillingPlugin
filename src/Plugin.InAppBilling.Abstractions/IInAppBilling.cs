@@ -1,14 +1,15 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Plugin.InAppBilling.Abstractions
 {
-    /// <summary>
-    /// Interface for InAppBilling
-    /// </summary>
-    public interface IInAppBilling : IDisposable
+	/// <summary>
+	/// Interface for InAppBilling
+	/// </summary>
+	[Preserve(AllMembers = true)]
+	public interface IInAppBilling : IDisposable
     {
         /// <summary>
         /// Gets or sets if in testing mode
@@ -19,7 +20,7 @@ namespace Plugin.InAppBilling.Abstractions
         /// Connect to billing service
         /// </summary>
         /// <returns>If Success</returns>
-        Task<bool> ConnectAsync();
+        Task<bool> ConnectAsync(ItemType itemType = ItemType.InAppPurchase);
 
         /// <summary>
         /// Disconnect from the billing service
@@ -35,14 +36,22 @@ namespace Plugin.InAppBilling.Abstractions
         /// <returns>List of products</returns>
         Task<IEnumerable<InAppBillingProduct>> GetProductInfoAsync(ItemType itemType, params string[] productIds);
 
-
-        /// <summary>
-        /// Get all current purhcase for a specifiy product type.
-        /// </summary>
-        /// <param name="itemType">Type of product</param>
+		/// <summary>
+		/// Verifies a specific product type and product id. Use e.g. when product is already purchased but verification failed and needs to be called again.
+		/// </summary>
+		/// <param name="itemType">Type of product</param>
+		/// <param name="verifyPurchase">Interface to verify purchase</param>
+		/// <param name="productId">Id of product</param>
+		/// <returns>The current purchases</returns>
+		Task<bool> VerifyPreviousPurchaseAsync(ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase, string productId);
+		
+		/// <summary>
+		/// Get all current purchases for a specific product type. If you use verification and it fails for some purchase, it's not contained in the result.
+		/// </summary>
+		/// <param name="itemType">Type of product</param>
         /// <param name="verifyPurchase">Verify purchase implementation</param>
-        /// <returns>The current purchases</returns>
-        Task<IEnumerable<InAppBillingPurchase>> GetPurchasesAsync(ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase = null);
+		/// <returns>The current purchases</returns>
+		Task<IEnumerable<InAppBillingPurchase>> GetPurchasesAsync(ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase = null);
 
         /// <summary>
         /// Purchase a specific product or subscription
@@ -74,5 +83,10 @@ namespace Plugin.InAppBilling.Abstractions
         /// <returns>If consumed successful</returns>
         /// <exception cref="InAppBillingPurchaseException">If an error occures during processing</exception>
         Task<InAppBillingPurchase> ConsumePurchaseAsync(string productId, ItemType itemType, string payload, IInAppBillingVerifyPurchase verifyPurchase = null);
-    }
+
+		Task<bool> FinishTransaction(InAppBillingPurchase purchase);
+
+		Task<bool> FinishTransaction(string purchaseId);
+
+	}
 }

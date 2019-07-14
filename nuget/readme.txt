@@ -4,8 +4,7 @@ Find the latest setup guides, documentation, and testing instructions at:
 https://github.com/jamesmontemagno/InAppBillingPlugin
 
 ## News
-- Plugins have moved to .NET Standard and have some important changes! Please read my blog:
-http://motzcod.es/post/162402194007/plugins-for-xamarin-go-dotnet-standard
+- Change to "ConnectAsync()" on ANDROID! Please pass in the ItemType that you are about to purchase! The default is normal in app purchase.
 
 ## Additional Required Setup (Please Read!)
 
@@ -22,6 +21,16 @@ protected override void OnActivityResult(int requestCode, Result resultCode, Int
     base.OnActivityResult(requestCode, resultCode, data);
     InAppBillingImplementation.HandleActivityResult(requestCode, resultCode, data);
 }
+
+## Android Current Activity Setup
+
+This plugin uses the [Current Activity Plugin](https://github.com/jamesmontemagno/CurrentActivityPlugin/blob/master/README.md) to get access to the current Android Activity. Be sure to complete the full setup if a MainApplication.cs file was not automatically added to your application. Please fully read through the [Current Activity Plugin Documentation](https://github.com/jamesmontemagno/CurrentActivityPlugin/blob/master/README.md). At an absolute minimum you must set the following in your Activity's OnCreate method:
+
+```csharp
+Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
+```
+
+It is highly recommended that you use a custom Application that are outlined in the Current Activity Plugin Documentation](https://github.com/jamesmontemagno/CurrentActivityPlugin/blob/master/README.md)
 
 
 ### Android Security

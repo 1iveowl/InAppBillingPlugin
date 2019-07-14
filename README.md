@@ -8,6 +8,8 @@ Get started by reading through the [In-App Billing Plugin documentation](https:/
 ## NuGet
 * NuGet: [Plugin.InAppBilling](https://www.nuget.org/packages/Plugin.InAppBilling) [![NuGet](https://img.shields.io/nuget/v/Plugin.InAppBilling.svg?label=NuGet)](https://www.nuget.org/packages/Plugin.InAppBilling/)
 
+Dev Feed: https://ci.appveyor.com/nuget/inappbillingplugin
+
 ## Build Status
 [![Build status](https://ci.appveyor.com/api/projects/status/0tfkgrlq8r2u7wb9?svg=true)](https://ci.appveyor.com/project/JamesMontemagno/inappbillingplugin)
 
@@ -31,3 +33,7 @@ I co-host a weekly development podcast, [Merge Conflict](http://mergeconflict.fm
 
 ### License
 The MIT License (MIT), see [LICENSE](LICENSE) file.
+
+### Want To Support This Project?
+All I have ever asked is to be active by submitting bugs, features, and sending those pull requests down! Want to go further? Make sure to subscribe to my weekly development podcast [Merge Conflict](http://mergeconflict.fm), where I talk all about awesome Xamarin goodies and you can optionally support the show by becoming a [supporter on Patreon](https://www.patreon.com/mergeconflictfm).
+

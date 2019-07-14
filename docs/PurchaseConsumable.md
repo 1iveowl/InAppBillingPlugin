@@ -62,7 +62,7 @@ public async Task<bool> PurchaseItem(string productId, string payload)
     var billing = CrossInAppBilling.Current;
     try
     {
-        var connected = await billing.ConnectAsync();
+        var connected = await billing.ConnectAsync(ItemType.InAppPurchase);
         if (!connected)
         {
             //we are offline or can't connect, don't try to purchase
@@ -77,7 +77,7 @@ public async Task<bool> PurchaseItem(string productId, string payload)
         {
             //did not purchase
         }
-        else
+        else if(purchase.State == PurchaseState.Purchased)
         {
             //purchased, we can now consume the item or do it later
 
